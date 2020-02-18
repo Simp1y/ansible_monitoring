@@ -1,0 +1,42 @@
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  external_labels:
+      monitor: 'my-project'
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  - 'alert.rules'
+  # - "first.rules"
+  # - "second.rules"
+
+# alert
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "alertmanager:{{ alertmanager_port }}"
+
+scrape_configs:
+###*************** Prometheus-Server ***************###
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['{{ prometheus_ip }}:{{ prometheus_port }}']
+
+###***** cAdvisor: docker_containers_monitoring_agents *****###
+ {% for cadv_server in cadv_servers %}
+ - job_name: '{{ cadv_server.cadv_server_name }}'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['{{ cadv_server.cadv_server_ip }}:{{ cadv_server.cadvisor_port }}']
+ {% endfor %}
+
+###***** Node_exporter: Host_server_monitoring_agents *****###
+ {% for nod_exp_server in nod_exp_servers %}
+ - job_name: '{{ nod_exp_server.nod_exp_server_name }}'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['{{ nod_exp_server.nod_exp_server_ip }}:{{ nod_exp_server.nod_exp_port }}']
+ {% endfor %}

@@ -1,0 +1,5 @@
+---
+# handlers file for prometheus-grafana
+# Restart Prometheus container when was edited prometheus.yml 
+  - name: Restart prometheus
+    shell: docker restart prometheus

@@ -1,0 +1,26 @@
+---
+# defaults file for prometheus-grafana
+monitoring_path: /home
+grafana_port: 3000
+prometheus_port: 9090
+cadvisor_port: 8080
+prometheus_ip: 0.0.0.0
+alertmanager_port: 9093
+user: ubuntu
+group: docker
+
+###****** Grafana ******### 
+user_allow: false
+grafana_password: password
+###********** cAdvisor variables block **********###
+cadv_servers:
+        - { cadv_server_name: "cAdv_server_1", cadv_server_ip: "0.0.0.0", cadvisor_port: "8099" }
+        - { cadv_server_name: "cAdv_server_2", cadv_server_ip: "0.0.0.0", cadvisor_port: "8080" }
+        - { cadv_server_name: "cAdv_server_3", cadv_server_ip: "0.0.0.0", cadvisor_port: "8080" }
+
+###********** Node_Exporter variables block **********###
+nod_exp_servers:
+        - { nod_exp_server_name: "node_server_1", nod_exp_server_ip: "0.0.0.0", nod_exp_port: "9100" }
+        - { nod_exp_server_name: "node_server_2", nod_exp_server_ip: "0.0.0.0", nod_exp_port: "9100" }
+        - { nod_exp_server_name: "node_server_3", nod_exp_server_ip: "0.0.0.0", nod_exp_port: "9100" }  
+
